@@ -18,3 +18,5 @@ INSERT INTO
     (NULL, '陳曉華4', 'shin@ggg.com', '0918123456', '2021-07-28', '台南市', '2021-07-28 05:49:05.000000'),
     (NULL, '陳曉華5', 'shin@ggg.com', '0918123456', '2021-07-28', '台南市', '2021-07-28 05:49:05.000000'),
     (NULL, '陳曉華6', 'shin@ggg.com', '0918123456', '2021-07-28', '台南市', '2021-07-28 05:49:05.000000')
+
+    CREATE USER 'Huang'@'localhost' IDENTIFIED VIA mysql_native_password USING '***';GRANT ALL PRIVILEGES ON *.* TO 'Huang'@'localhost' REQUIRE NONE WITH GRANT OPTION MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;
