@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form onsubmit="ajaxSend(); return false">
+    <input type="number" name="a" placeholder="這裡密碼啦"> +
+    <input type="number" name="b" placeholder="這裡帳號啦"> 
+    <button>＝</button> <span id="result"></span>
+    </form>
+    <script>
+        const astr = "name=bill&age=25"
+        const sp = new URLSearchParams(astr);
+        sp.set('male', 'man')
+        for (let [k,v] of sp){
+            console.log(k,v);
+        }
+        console.log( sp.toString());
+    </script>
+</body>
+</html>

@@ -55,7 +55,7 @@ WHERE c.`sid` IS NOT NULL;
 SELECT * FROM `products` WHERE `author`='吳睿紘';
 SELECT * FROM `products` WHERE `author` LIKE '吳睿紘';
 SELECT * FROM `products` WHERE `author` LIKE '%陳%';
-SELECT * FROM `products` WHERE `author` LIKE '陳%';
+SELECT * FROM `products` WHERE `author` LIKE '陳%'; --陳一定要在最前面
 
 --
 SELECT * FROM `products` WHERE sid=6 OR sid=2 OR sid=3;

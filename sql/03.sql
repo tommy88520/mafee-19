@@ -16,7 +16,7 @@ SELECT p.`category_sid`, c.`name` , COUNT(1) num
     FROM `products` p
     JOIN `categories` c
     ON p.`category_sid` = c.`sid`
-    GROUP BY `category_sid`; --byself
+    GROUP BY p.`category_sid`; --byself
 
 
 -- GROUP BY: 群組
