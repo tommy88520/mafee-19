@@ -11,5 +11,6 @@
      echo '<br>';
      echo 'second';
      print_r($ar1);
+     
      ?>
 </pre>
