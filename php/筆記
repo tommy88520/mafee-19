@@ -5,3 +5,7 @@ php是阿帕契的模組=翻譯官
 error 會直接停止 會往後的城市不會執行
 waring 還是會執行，但也面上會出現標語 會破版
 Notice也是
+
+http裡面包涵headers和body(不是html的那個body)
+GET 會放在headers
+POST的資料會放在body

@@ -1,0 +1,17 @@
+GET http://localhost/mafee-19/php/07.query-string.php?a=5&b=3
+
+###分隔
+
+GET http://localhost/mafee-19/php/13.for.php
+
+###分隔
+
+
+
+
+###分隔
+POST http://localhost/mafee-19/php/26.post-data.php
+Content-Type: application/x-www-form-urlencoded
+//送出的格式
+
+a=100&b=66
