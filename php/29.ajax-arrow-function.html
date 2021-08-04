@@ -19,15 +19,15 @@
         function sendData() {
             const fd = new FormData(document.form1);//表單物件 這個沒有外觀 跟上面的body的form不一樣
             const info = document.querySelector('#info');
-
+            
             fetch('./26.post-data.php', {
                 method: 'POST',
                 body: fd,
-            }).then(function(response){
-                return response.text();
-            }).then(function(txt){
-                info.innerText = txt;
             })
+            .then(r=>r.json())
+            .then(obj=>{
+                info.innerHTML = obj.result;
+            });
 
 
 

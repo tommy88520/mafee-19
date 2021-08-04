@@ -27,13 +27,22 @@
             const a = aform.value;
             const b = bform.value;
 
-            const xhr = new XMLHttpRequest();
-            xhr.onload = function(){
-                result.innerHTML = xhr.responseText;
+            //用fetch改
 
-            }
-            xhr.open('GET','07.query-string.php?' + sp.toString());
-            xhr.send();
+            fetch('07.query-string.php?' + sp.toString())
+            .then(r=>r.text())
+            .then(txt=>{
+                result.innerText = txt;
+            });
+
+            //  原做法
+            // const xhr = new XMLHttpRequest();
+            // xhr.onload = function(){
+            //     result.innerHTML = xhr.responseText;
+
+            // }
+            // xhr.open('GET','07.query-string.php?' + sp.toString());
+            // xhr.send();
         }
 
         
