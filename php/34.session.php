@@ -6,7 +6,7 @@ if(! isset($_SESSION['num'])){
 } else {
     $_SESSION['num'] ++;
 }
-
+//unset($_SESSION['num']); //刪掉某個session變數
 ?>
 <!doctype html>
 <html lang="en">
