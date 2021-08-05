@@ -32,7 +32,7 @@
         xhr.onload = function(){
             result.innerHTML = xhr.responseText;
         }
-        xhr.open('POST', 'a20210804-02-post-data.php' );
+        xhr.open('POST', './26.post-data.php' );
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.send(sp);
     }
