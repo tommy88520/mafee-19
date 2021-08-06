@@ -1,5 +1,11 @@
 <?php
+    include __DIR__. '/partials/init.php';
     $title = '登入';
+    if(isset($_SESSION['user'])) {
+        header('Location: index_.php');
+        exit;
+    }
+    //收到檔頭的資訊之後可以直接跳轉到你想要的頁面
 ?>
 <?php include __DIR__. '/partials/html-head.php'; ?>
 <?php include __DIR__. '/partials/nav-bar.php'; ?>
@@ -65,6 +71,11 @@
             .then(r=>r.json())
             .then(obj=>{
                 console.log('result:', obj);
+                if(obj.success){
+                    location.href = 'index_.php';
+                } else {
+                    alert(obj.error)
+                }
             });
         }
 
