@@ -44,6 +44,4 @@ if($_POST['password'] !== $userData['pw']) {
     ];
 }
 
-
-
 echo json_encode($output, JSON_UNESCAPED_UNICODE);
