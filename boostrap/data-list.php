@@ -18,12 +18,12 @@ $totalPages = ceil($totalRows / $perPage); // 正數是無條件進位
 // echo "$totalRows, $totalPages"; exit;
 
 // 讓 $page 的值在安全的範圍
-if($page<1){
+if ($page < 1) {
     header('Location: ?page=1');
     exit;
 }
-if($page>$totalPages){
-    header('Location: ?page='. $totalPages);
+if ($page > $totalPages) {
+    header('Location: ?page=' . $totalPages);
     exit;
 }
 
@@ -45,14 +45,19 @@ $rows = $pdo->query($sql)
 ?>
 <?php include __DIR__ . '/partials/html-head.php'; ?>
 <?php include __DIR__ . '/partials/nav-bar.php'; ?>
+<style>
+        table tbody i.fas.fa-trash-alt {
+            color: darkred;
+        }
+</style>
 <div class="container">
     <div class="row">
         <div class="col">
             <nav aria-label="Page navigation example">
                 <ul class="pagination d-flex justify-content-center">
-                       <li class="page-item <?= $page<=1 ? 'disabled' : ''?>">
-                           <a class="page-link" href="?page=<?= $page-1 ?>">
-                           <!-- href""後面可以接完整路徑 
+                    <li class="page-item <?= $page <= 1 ? 'disabled' : '' ?>">
+                        <a class="page-link" href="?page=<?= $page - 1 ?>">
+                            <!-- href""後面可以接完整路徑 
                            http://localhost/mafee-19/boostrap/data-list.php?page=6#abcd
                         或是省略協定的部分
                         localhost/mafee-19/boostrap/data-list.php?page=6#abcd
@@ -63,21 +68,24 @@ $rows = $pdo->query($sql)
                         甚至可以只留hash
                         #abcd(老師自己定義的)
                         -->
-                           <i class="fas fa-arrow-circle-left"></i>
+                            <i class="fas fa-arrow-circle-left"></i>
                         </a>
-                        </li>
+                    </li>
 
-                        <?php for($i=1; $i<=$totalPages; $i++): ?>
-                        <li class="page-item <?= $i==$page ? 'active' : ''?>">
-                            <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
-                        </li>
-                        <?php endfor; ?>
+                    <?php for ($i = $page - 5; $i <= $page + 5; $i++) :
+                        if ($i >= 1 and $i <= $totalPages) : ?>
+                            <li class="page-item <?= $i == $page ? 'active' : '' ?>">
+                                <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                            </li>
+                    <?php endif;
+                    endfor; ?>
 
-                       <li class="page-item <?= $page>=$totalPages ? 'disabled' : ''?>">
-                           <a class="page-link" href="?page=<?= $page + 1 ?>">
-                        <i class="fas fa-arrow-circle-right"></i>
-                       </a></li>
-                    </ul>
+                    <li class="page-item <?= $page >= $totalPages ? 'disabled' : '' ?>">
+                        <a class="page-link" href="?page=<?= $page + 1 ?>">
+                            <i class="fas fa-arrow-circle-right"></i>
+                        </a>
+                    </li>
+                </ul>
             </nav>
         </div>
     </div>
@@ -87,23 +95,38 @@ $rows = $pdo->query($sql)
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
+                        <th scope="col"><i class="fas fa-trash-alt"></i></th>
                         <th scope="col">sid</th>
                         <th scope="col">name</th>
                         <th scope="col">email</th>
                         <th scope="col">mobile</th>
                         <th scope="col">birthday</th>
                         <th scope="col">address</th>
+                        <th scope="col"><i class="fas fa-edit"></i></th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($rows as $r) : ?>
                         <tr>
+                            <td>
+                                <a href="data-delete.php?sid=<?= $r['sid'] ?>"><i class="fas fa-trash-alt"></i>
+                                </a>
+                            </td>
+
                             <td><?= $r['sid'] ?></td>
                             <td><?= $r['name'] ?></td>
                             <td><?= $r['email'] ?></td>
                             <td><?= $r['mobile'] ?></td>
                             <td><?= $r['birthday'] ?></td>
-                            <td><?= $r['address'] ?></td>
+                            <!--
+                            <td><?= strip_tags($r['address']) ?></td>
+                            -->
+                            <td><?= htmlentities($r['address']) ?></td>
+                            <!-- 避免xss漏洞 -->
+                            <td>
+                                <a href="data-edit.php?sid=<?= $r['sid'] ?>"><i class="fas fa-edit"></i>
+                                </a>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
