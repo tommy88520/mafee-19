@@ -109,7 +109,9 @@ $rows = $pdo->query($sql)
                     <?php foreach ($rows as $r) : ?>
                         <tr>
                             <td>
-                                <a href="data-delete.php?sid=<?= $r['sid'] ?>"><i class="fas fa-trash-alt"></i>
+                                <a href="data-delete.php?sid=<?= $r['sid'] ?>" 
+                                onclick="return confirm('Are you sure you want to delete this')">
+                                <i class="fas fa-trash-alt"></i>
                                 </a>
                             </td>
 
