@@ -9,7 +9,7 @@
 ?>
 <?php include __DIR__. '/partials/html-head.php'; ?>
 <?php include __DIR__. '/partials/nav-bar.php'; ?>
-    <style>
+<style>
         form .form-group small {
             color: red;
             display: none;
@@ -72,9 +72,9 @@
             .then(obj=>{
                 console.log('result:', obj);
                 if(obj.success){
-                    location.href = 'index_.php';
+                    location.href = 'index_.php'; // 跳轉到別的頁面
                 } else {
-                    alert(obj.error)
+                    alert(obj.error);
                 }
             });
         }

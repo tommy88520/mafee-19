@@ -28,7 +28,7 @@
                     </li>
                 <?php else: ?>
                     <li class="nav-item active">
-                        <a class="nav-link" href="login.php">登入</a>
+                        <a class="nav-link" href="log-in.php">登入</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">註冊</a>
