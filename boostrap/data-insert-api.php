@@ -8,7 +8,7 @@ $output = [
     'rowCount' => 0,
     'postData' => $_POST,
 ];
-
+// 練習題：避免直接拜訪時的錯誤訊息
 // TODO： 資料格式檢查
 if(mb_strlen($_POST['name'])<2){
     $output['error'] = '姓名長度太短';
