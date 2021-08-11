@@ -1,16 +1,17 @@
 <?php
 include __DIR__. '/partials/init.php';
 
+header('Content-Type: application/json');
+
 $output = [
     'success' => false,
-    'error' => '你什麼都沒填',
+    'error' => '資料欄位不足',
     'code' => 0,
     'rowCount' => 0,
     'postData' => $_POST,
 ];
-// 練習題：避免直接拜訪時的錯誤訊息
 
-
+// 練習題解答：避免直接拜訪時的錯誤訊息
 if(
     empty($_POST['sid']) or
     empty($_POST['name']) or
@@ -22,7 +23,9 @@ if(
     echo json_encode($output);
     exit;
 }
-// TODO： 資料格式檢查
+
+
+// 資料格式檢查
 if(mb_strlen($_POST['name'])<2){
     $output['error'] = '姓名長度太短';
     $output['code'] = 410;
@@ -37,26 +40,14 @@ if(! filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
     exit;
 }
 
-// 錯誤的作法: 可能受到 SQL injection 攻擊
 
-// $sql = "INSERT INTO `address_book`(
-//                `name`, `email`, `mobile`,
-//                `birthday`, `address`, `created_at`
-//                ) VALUES (
-//                     '{$_POST['name']}', '{$_POST['email']}', '{$_POST['mobile']}',
-//                     '{$_POST['birthday']}', '{$_POST['address']}', NOW()
-//                )";
-
-// $stmt = $pdo->query($sql);
-
-
-$sql = "INSERT INTO `address_book`(
-               `name`, `email`, `mobile`,
-               `birthday`, `address`, `created_at`
-               ) VALUES (
-                    ?, ?, ?,
-                    ?, ?, NOW()
-               )";
+$sql = "UPDATE `address_book` SET 
+                          `name`=?,
+                          `email`=?,
+                          `mobile`=?,
+                          `birthday`=?,
+                          `address`=?
+                          WHERE `sid`=?";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
@@ -65,10 +56,15 @@ $stmt->execute([
     $_POST['mobile'],
     $_POST['birthday'],
     $_POST['address'],
+    $_POST['sid'],
 ]);
 
-$output['rowCount'] = $stmt->rowCount(); // 新增的筆數
+$output['rowCount'] = $stmt->rowCount(); // 修改的筆數
 if($stmt->rowCount()==1){
     $output['success'] = true;
+    $output['error'] = '';
+} else {
+    $output['error'] = '資料沒有修改';
 }
+
 echo json_encode($output);

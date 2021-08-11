@@ -112,7 +112,7 @@
                 .then(obj=>{
                     console.log(obj);
                     if(obj.success){
-                        location.href = 'data-list.php';
+                        alert('修改成功');//or boostrap的model
                     } else {
                         alert(obj.error);
                     }
