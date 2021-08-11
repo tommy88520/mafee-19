@@ -10,6 +10,12 @@ $output = [
 ];
 // 練習題：避免直接拜訪時的錯誤訊息
 // TODO： 資料格式檢查
+if(!isset($sql)){
+    $output['error'] = '你什麼都沒填';
+    $output['code'] = 400;
+    echo json_encode($output, JSON_UNESCAPED_UNICODE);
+    exit; // 直接離開 (中斷) 程式
+}
 if(mb_strlen($_POST['name'])<2){
     $output['error'] = '姓名長度太短';
     $output['code'] = 410;

@@ -46,8 +46,12 @@ $rows = $pdo->query($sql)
 <?php include __DIR__ . '/partials/html-head.php'; ?>
 <?php include __DIR__ . '/partials/nav-bar.php'; ?>
 <style>
-        table tbody i.fas.fa-trash-alt {
-            color: darkred;
+    table tbody i.fas.fa-trash-alt {
+        color: darkred;
+    }
+    table tbody i.fas.fa-trash-alt.ajaxDelete {
+            color: darkorange;
+            cursor: pointer;
         }
 </style>
 <div class="container">
@@ -96,6 +100,7 @@ $rows = $pdo->query($sql)
                 <thead>
                     <tr>
                         <th scope="col"><i class="fas fa-trash-alt"></i></th>
+                        <th scope="col"><i class="fas fa-trash-alt"> ajax</i></th>
                         <th scope="col">sid</th>
                         <th scope="col">name</th>
                         <th scope="col">email</th>
@@ -107,26 +112,27 @@ $rows = $pdo->query($sql)
                 </thead>
                 <tbody>
                     <?php foreach ($rows as $r) : ?>
-                        <tr>
+                        <tr data-sid="<?= $r['sid'] ?>">
                             <td>
-                                <a href="data-delete.php?sid=<?= $r['sid'] ?>" 
-                                onclick="return confirm('Are you sure you want to delete this')">
-                                <i class="fas fa-trash-alt"></i>
+                                <a href="data-delete.php?sid=<?= $r['sid'] ?>" onclick="return confirm('確定要刪除編號為 <?= $r['sid'] ?> 的資料嗎？')">
+                                    <i class="fas fa-trash-alt"></i>
                                 </a>
                             </td>
-
+                            <td>
+                                <i class="fas fa-trash-alt ajaxDelete"></i>
+                            </td>
                             <td><?= $r['sid'] ?></td>
                             <td><?= $r['name'] ?></td>
                             <td><?= $r['email'] ?></td>
                             <td><?= $r['mobile'] ?></td>
                             <td><?= $r['birthday'] ?></td>
                             <!--
-                            <td><?= strip_tags($r['address']) ?></td>
-                            -->
+                    <td><?= strip_tags($r['address']) ?></td>
+                    -->
                             <td><?= htmlentities($r['address']) ?></td>
-                            <!-- 避免xss漏洞 -->
                             <td>
-                                <a href="data-edit.php?sid=<?= $r['sid'] ?>"><i class="fas fa-edit"></i>
+                                <a href="data-edit.php?sid=<?= $r['sid'] ?>">
+                                    <i class="fas fa-edit"></i>
                                 </a>
                             </td>
                         </tr>
@@ -139,4 +145,34 @@ $rows = $pdo->query($sql)
 
 </div>
 <?php include __DIR__ . '/partials/scripts.php'; ?>
+<script>
+    const myTable = document.querySelector('table');
+
+    myTable.addEventListener('click', function(event) {
+        console.log(event.target);
+        // 判斷有沒有點到橙色的垃圾筒
+        if (event.target.classList.contains('ajaxDelete')) {
+            console.log(event.target.closest('tr'));
+            const tr = event.target.closest('tr');
+            const sid = tr.getAttribute('data-sid');
+
+            console.log(`tr.dataset.sid:`, tr.dataset.sid); // 也可以這樣拿
+
+            if(confirm(`是否要刪除編號為 ${sid} 的資料？`)){
+                fetch('data-delete-api.php?sid=' + sid)
+                    .then(r=>r.json())
+                    .then(obj=>{
+                        if(obj.success){
+                            tr.remove();  // 從 DOM 裡移除元素
+                            // TODO: 1. 刷頁面, 2. 取得該頁的資料再呈現
+
+                        } else {
+                            alert(obj.error);
+                        }
+                    });
+            }
+
+        }
+    });
+</script>
 <?php include __DIR__ . '/partials/html-foot.php'; ?>
