@@ -2,7 +2,7 @@
 <?php
 
 // 上傳後的檔案要放在哪裡
-$folder = __DIR__. '/imgs/';
+$folder = __DIR__. '/img/';
 
 
 // 如果有上傳檔案
