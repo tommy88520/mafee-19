@@ -16,7 +16,7 @@ $title = '表單元素測試';
 $row = [
     "combo1" => "3",
     "exampleRadios" => "option3",
-    "cb" => '["option2", "option3"]',
+    "cb" => '["option2", "option3"]', // 用字串option2,option3
 ];
 
 $row['cb'] = json_decode($row['cb'], true);
